@@ -2,6 +2,7 @@
 FROM node:alpine as build-target
 
 RUN mkdir -p /usr/src/app
+ENV PORT 3000
 
 WORKDIR /usr/src/app
 
@@ -29,5 +30,7 @@ WORKDIR /usr/src/app
 # Include only the release build and production packages.
 COPY --from=build-target /usr/src/app/node_modules node_modules
 COPY --from=build-target /usr/src/app/.next .next
+COPY --from=build-target /usr/src/app/package.json package.json
 
+EXPOSE 3000
 CMD ["yarn", "start"]
