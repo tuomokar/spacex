@@ -1,5 +1,7 @@
 # SpaceX
 
+![Build and deploy Docker app to Azure](https://github.com/tuomokar/spacex/workflows/Build%20and%20deploy%20Docker%20app%20to%20Azure/badge.svg)
+
 Simple app to display SpaceX data for fun. Runs in [Azure](https://tuomokar-spacex.azurewebsites.net/), feel free to give it a look.
 
 Uses the following primary dependencies:
