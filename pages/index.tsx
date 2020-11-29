@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
+import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 const HomePage: React.FC = () => {
-  const [testData, setTestData] = useState<null | { test: string }>(null)
+  const [testData, setTestData] = useState<null | { test: string }>(null);
 
   useEffect(() => {
     (async () => {
-      const data = await (await fetch('/api/spacex')).json()
+      const data = await (await fetch('/api/spacex')).json();
 
-      setTestData(data)
-    })()
-  }, [])
+      setTestData(data);
+    })();
+  }, []);
 
   return (
     <div>
@@ -20,12 +20,10 @@ const HomePage: React.FC = () => {
 
       <div>
         testContent
-        <div>
-          {testData?.test}
-        </div>
+        <div>{testData?.test}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
