@@ -1,6 +1,8 @@
 # SpaceX
 
-Simple app to display SpaceX data. Used the following technologies (besides the most obvious ones, such as Node.js and JavaScript):
+Simple app to display SpaceX data for fun. Runs in [Azure](https://tuomokar-spacex.azurewebsites.net/), feel free to give it a look.
+
+Uses the following primary dependencies:
 
 - [Next.js](https://nextjs.org/)
   - All-in-one framework to handle both the front end and back end - fast refresh, transpiling, API routes, code-splitting and bundling, etc.
@@ -33,3 +35,9 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+## Build with Docker
+
+```bash
+docker build --shm-size 1G .
+```
