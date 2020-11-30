@@ -3,6 +3,7 @@ import type { FunctionComponent } from 'react';
 import Head from 'next/head';
 import Launch from '../src/types/Launch';
 import { fetchLaunches } from '../src/api-calls';
+import Launches from '../src/launches';
 
 const HomePage: FunctionComponent = () => {
   const [launches, setLaunches] = useState<null | Launch[]>(null);
@@ -21,13 +22,7 @@ const HomePage: FunctionComponent = () => {
         <title>The best SpaceX app</title>
       </Head>
 
-      <div>
-        {launches?.map((launch) => (
-          <div>
-            <div>{launch.id}</div>
-          </div>
-        ))}
-      </div>
+      {launches && <Launches launches={launches} />}
     </div>
   );
 };
