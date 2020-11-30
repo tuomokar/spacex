@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import Head from 'next/head';
-import LaunchItem from '../src/types/Launch';
-import { fetchLaunches } from '../src/api-calls';
-import Launches from '../src/components/launches';
-import GenericError from '../src/components/error';
+import LaunchItem from '../src-front/types/Launch';
+import { fetchLaunches } from '../src-front/api-calls';
+import Launches from '../src-front/components/launches';
+import GenericError from '../src-front/components/error';
 
 const HomePage: FunctionComponent = () => {
   const [launches, setLaunches] = useState<null | LaunchItem[]>(null);

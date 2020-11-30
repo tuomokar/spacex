@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import type { FunctionComponent } from 'react';
 import { useEffect, useState } from 'react';
 
-import { fetchLaunch, fetchRocket } from '../../src/api-calls';
-import GenericError from '../../src/components/error';
+import { fetchLaunch, fetchRocket } from '../../src-front/api-calls';
+import GenericError from '../../src-front/components/error';
 // TODO: might actually be better to name this as Launch and the component Launch -> LaunchItem
-import LaunchItem from '../../src/types/Launch';
-import Rocket from '../../src/types/Rocket';
+import LaunchItem from '../../src-front/types/Launch';
+import Rocket from '../../src-front/types/Rocket';
 
 const LaunchPage: FunctionComponent = () => {
   const router = useRouter();
