@@ -1,24 +1,39 @@
 import LaunchItem from './types/Launch';
+import ResponseContainer from './types/ResponseContainer';
 
-export const fetchLaunches = async (): Promise<LaunchItem[]> => {
+export const fetchLaunches = async (): Promise<
+  ResponseContainer<LaunchItem[]>
+> => {
   try {
     const fetchResponse = await fetch('/api/launches');
 
-    return fetchResponse.json();
+    return {
+      data: await fetchResponse.json(),
+      succeeded: true,
+    };
   } catch (e) {
-    // TODO: display error to the user
-    console.log('Failed');
+    return {
+      data: null,
+      succeeded: false,
+    };
   }
 };
 
 // TODO: could generalize these api calls
-export const fetchLaunch = async (id: string): Promise<LaunchItem> => {
+export const fetchLaunch = async (
+  id: string,
+): Promise<ResponseContainer<LaunchItem>> => {
   try {
     const fetchResponse = await fetch(`/api/launches/${id}`);
 
-    return fetchResponse.json();
+    return {
+      data: await fetchResponse.json(),
+      succeeded: true,
+    };
   } catch (e) {
-    // TODO: display error to the user
-    console.log('Failed');
+    return {
+      data: null,
+      succeeded: false,
+    };
   }
 };

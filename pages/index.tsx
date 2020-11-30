@@ -4,15 +4,21 @@ import Head from 'next/head';
 import LaunchItem from '../src/types/Launch';
 import { fetchLaunches } from '../src/api-calls';
 import Launches from '../src/components/launches';
+import GenericError from '../src/components/error';
 
 const HomePage: FunctionComponent = () => {
   const [launches, setLaunches] = useState<null | LaunchItem[]>(null);
+  const [errored, setErrored] = useState<boolean>(null);
 
   useEffect(() => {
     (async () => {
-      const data = await fetchLaunches();
+      const { data, succeeded } = await fetchLaunches();
 
-      setLaunches(data);
+      if (!succeeded) {
+        setErrored(true);
+      } else {
+        setLaunches(data);
+      }
     })();
   }, []);
 
@@ -23,6 +29,7 @@ const HomePage: FunctionComponent = () => {
       </Head>
 
       {launches && <Launches launches={launches} />}
+      {errored && <GenericError />}
     </div>
   );
 };
