@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default interface Launch {
+export default interface LaunchItem {
   capsules: unknown[];
   cores: unknown[];
   crew: unknown[];

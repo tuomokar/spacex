@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import Head from 'next/head';
-import Launch from '../src/types/Launch';
+import LaunchItem from '../src/types/Launch';
 import { fetchLaunches } from '../src/api-calls';
-import Launches from '../src/launches';
+import Launches from '../src/components/launches';
 
 const HomePage: FunctionComponent = () => {
-  const [launches, setLaunches] = useState<null | Launch[]>(null);
+  const [launches, setLaunches] = useState<null | LaunchItem[]>(null);
 
   useEffect(() => {
     (async () => {

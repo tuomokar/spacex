@@ -1,6 +1,6 @@
-import Launch from './types/Launch';
+import LaunchItem from './types/Launch';
 
-export const fetchLaunches = async (): Promise<Launch[]> => {
+export const fetchLaunches = async (): Promise<LaunchItem[]> => {
   try {
     const fetchResponse = await fetch('/api/spacex');
 
