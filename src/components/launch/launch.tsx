@@ -7,10 +7,13 @@ interface LaunchProps {
 }
 
 const Launch: FunctionComponent<LaunchProps> = ({ launch }) => {
-  const { name, date_local: date } = launch;
+  const { id, name, date_local: date } = launch;
+
   return (
     <div className={styles.container}>
-      <div>{name}</div>
+      <div>
+        <a href={`/launches/${id}`}>{name}</a>
+      </div>
       <div>{date}</div>
     </div>
   );

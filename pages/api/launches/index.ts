@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import https from 'https';
-import { resolveSoa } from 'dns';
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   return new Promise((resolve) => {
