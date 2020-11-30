@@ -1,5 +1,6 @@
 import LaunchItem from './types/Launch';
 import ResponseContainer from './types/ResponseContainer';
+import Rocket from './types/Rocket';
 
 const doFetchRequest = async <T>(
   url: string,
@@ -29,4 +30,10 @@ export const fetchLaunch = async (
   id: string,
 ): Promise<ResponseContainer<LaunchItem>> => {
   return doFetchRequest(`/launches/${id}`);
+};
+
+export const fetchRocket = async (
+  id: string,
+): Promise<ResponseContainer<Rocket>> => {
+  return doFetchRequest(`/rockets/${id}`);
 };
