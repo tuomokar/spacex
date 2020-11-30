@@ -10,7 +10,7 @@ const Launches: FunctionComponent<LaunchesProps> = ({ launches }) => {
   return (
     <div>
       {launches.map((launch) => (
-        <Launch launch={launch} />
+        <Launch key={launch.id} launch={launch} />
       ))}
     </div>
   );
