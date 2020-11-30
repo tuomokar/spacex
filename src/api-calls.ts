@@ -1,14 +1,14 @@
 import LaunchItem from './types/Launch';
 import ResponseContainer from './types/ResponseContainer';
 
-export const fetchLaunches = async (): Promise<
-  ResponseContainer<LaunchItem[]>
-> => {
+const doFetchRequest = async <T>(
+  url: string,
+): Promise<ResponseContainer<T>> => {
   try {
-    const fetchResponse = await fetch('/api/launches');
+    const response = await fetch(`/api${url}`);
 
     return {
-      data: await fetchResponse.json(),
+      data: await response.json(),
       succeeded: true,
     };
   } catch (e) {
@@ -19,21 +19,14 @@ export const fetchLaunches = async (): Promise<
   }
 };
 
-// TODO: could generalize these api calls
+export const fetchLaunches = async (): Promise<
+  ResponseContainer<LaunchItem[]>
+> => {
+  return doFetchRequest('/launches');
+};
+
 export const fetchLaunch = async (
   id: string,
 ): Promise<ResponseContainer<LaunchItem>> => {
-  try {
-    const fetchResponse = await fetch(`/api/launches/${id}`);
-
-    return {
-      data: await fetchResponse.json(),
-      succeeded: true,
-    };
-  } catch (e) {
-    return {
-      data: null,
-      succeeded: false,
-    };
-  }
+  return doFetchRequest(`/launches/${id}`);
 };
