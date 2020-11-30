@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { FunctionComponent } from 'react';
 import Head from 'next/head';
+import Launch from '../src/types/Launch';
+import { fetchLaunches } from '../src/api-calls';
 
-const HomePage: React.FC = () => {
-  const [testData, setTestData] = useState<null | { test: string }>(null);
+const HomePage: FunctionComponent = () => {
+  const [launches, setLaunches] = useState<null | Launch[]>(null);
 
   useEffect(() => {
     (async () => {
-      const data = await (await fetch('/api/spacex')).json();
+      const data = await fetchLaunches();
 
-      setTestData(data);
+      setLaunches(data);
     })();
   }, []);
 
@@ -19,8 +22,11 @@ const HomePage: React.FC = () => {
       </Head>
 
       <div>
-        testContent
-        <div>{testData?.test}</div>
+        {launches?.map((launch) => (
+          <div>
+            <div>{launch.id}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
