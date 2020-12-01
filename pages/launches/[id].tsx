@@ -7,7 +7,7 @@ import GenericError from '../../src-front/components/error';
 import State from '../../src-front/state/State';
 import Rocket from '../../src-front/types/Rocket';
 
-interface LaunchPageProps extends Pick<State, 'launches'> {}
+interface LaunchPageProps extends Pick<State, 'launches' | 'payloads'> {}
 
 const getLaunchFromLocalLaunches = (
   id,
@@ -54,7 +54,10 @@ const useGetLaunch = (
   return launch;
 };
 
-const LaunchPage: FunctionComponent<LaunchPageProps> = ({ launches }) => {
+const LaunchPage: FunctionComponent<LaunchPageProps> = ({
+  launches,
+  payloads,
+}) => {
   const [errored, setErrored] = useState<boolean>(false);
 
   const launch = useGetLaunch(launches, setErrored);
@@ -85,13 +88,27 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({ launches }) => {
     return <div>Loading, please wait..</div>;
   }
 
+  const launchPayloads = payloads?.filter(
+    (payload) => payload.launch === launch.id,
+  );
+
   return (
     <div>
       {launch.name}
       {rocket && (
         <div>
-          The rocket used in the launch
+          The rocket used in the launch:
           <div>{rocket.name}</div>
+        </div>
+      )}
+      {launchPayloads && (
+        <div>
+          {"The launch's payloads:"}
+          <ul>
+            {launchPayloads?.map((payload) => (
+              <li key={payload.name}>{payload.name}</li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
