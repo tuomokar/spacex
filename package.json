@@ -28,7 +28,8 @@
     "build": "next build",
     "start": "next start",
     "prettier": "prettier --write *.{ts,tsx}",
-    "eslint": "eslint --fix ."
+    "eslint": "eslint --fix .",
+    "tsx": "tsc"
   },
   "dependencies": {
     "next": "10.0.3",
