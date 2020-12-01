@@ -11,6 +11,7 @@ import Payload from '../types/Payload';
 import CrewMembers from '../components/crew-members';
 import Payloads from '../components/payloads';
 import Rocket from '../components/rocket/rocket';
+import ToMainPageLink from '../components/to-main-page-link';
 
 interface LaunchPageProps {
   launches: LaunchItem[] | null;
@@ -106,7 +107,9 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
 
   return (
     <div>
-      {launch.name}
+      <ToMainPageLink />
+
+      <h2>{launch.name}</h2>
       <Rocket rocket={rocket} />
       <Payloads payloads={launchPayloads} />
       <CrewMembers crewMembers={launchCrewMembers} />
