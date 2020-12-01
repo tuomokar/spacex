@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import type { AppProps } from 'next/app';
 
-import LaunchItem from './types/Launch';
-import Payload from './types/Payload';
-import CrewMember from './types/CrewMember';
-import { fetchCrewMembers, fetchLaunches, fetchPayloads } from './api-calls';
+import LaunchItem from '../types/Launch';
+import Payload from '../types/Payload';
+import CrewMember from '../types/CrewMember';
+import { fetchCrewMembers, fetchLaunches, fetchPayloads } from '../api-calls';
 
 const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const [launches, setLaunches] = useState<null | LaunchItem[]>(null);
