@@ -1,5 +1,4 @@
 import LaunchItem from './types/Launch';
-import Payload from './types/Payload';
 import ResponseContainer from './types/ResponseContainer';
 import Rocket from './types/Rocket';
 
@@ -37,10 +36,4 @@ export const fetchRocket = async (
   id: string,
 ): Promise<ResponseContainer<Rocket>> => {
   return doFetchRequest(`/rockets/${id}`);
-};
-
-export const fetchPayload = async (
-  id: string,
-): Promise<ResponseContainer<Payload>> => {
-  return doFetchRequest(`/payloads/${id}`);
 };

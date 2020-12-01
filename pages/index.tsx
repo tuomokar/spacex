@@ -5,10 +5,16 @@ import LaunchItem from '../src-front/types/Launch';
 import { fetchLaunches } from '../src-front/api-calls';
 import Launches from '../src-front/components/launches';
 import GenericError from '../src-front/components/error';
+import State from '../src-front/state/State';
+import type Dispatch from '../src-front/state/Dispatch';
+import { SET_LAUNCHES_ACTION_TYPE } from '../src-front/state/constants';
 
-const HomePage: FunctionComponent = () => {
-  const [launches, setLaunches] = useState<null | LaunchItem[]>(null);
-  const [errored, setErrored] = useState<boolean>(null);
+interface HomePageProps extends Pick<State, 'launches'> {
+  dispatch: Dispatch;
+}
+
+const HomePage: FunctionComponent<HomePageProps> = ({ launches, dispatch }) => {
+  const [errored, setErrored] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -17,10 +23,10 @@ const HomePage: FunctionComponent = () => {
       if (!succeeded) {
         setErrored(true);
       } else {
-        setLaunches(data);
+        dispatch({ type: SET_LAUNCHES_ACTION_TYPE, payload: data });
       }
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

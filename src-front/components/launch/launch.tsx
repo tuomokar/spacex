@@ -1,4 +1,6 @@
 import { FunctionComponent } from 'react';
+import Link from 'next/link';
+
 import LaunchItem from '../../types/Launch';
 import styles from './launch.module.css';
 
@@ -12,7 +14,7 @@ const Launch: FunctionComponent<LaunchProps> = ({ launch }) => {
   return (
     <div className={styles.container}>
       <div>
-        <a href={`/launches/${id}`}>{name}</a>
+        <Link href={`/launches/${id}`}>{name}</Link>
       </div>
       <div>{date}</div>
     </div>

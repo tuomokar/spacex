@@ -4,20 +4,39 @@ import { useEffect, useState } from 'react';
 
 import { fetchLaunch, fetchRocket } from '../../src-front/api-calls';
 import GenericError from '../../src-front/components/error';
-// TODO: might actually be better to name this as Launch and the component Launch -> LaunchItem
-import LaunchItem from '../../src-front/types/Launch';
+import State from '../../src-front/state/State';
 import Rocket from '../../src-front/types/Rocket';
 
-const LaunchPage: FunctionComponent = () => {
+interface LaunchPageProps extends Pick<State, 'launches'> {}
+
+const getLaunchFromLocalLaunches = (
+  id,
+  launches: LaunchPageProps['launches'],
+) => {
+  if (!launches) {
+    return null;
+  }
+
+  if (typeof id !== 'string') {
+    return null;
+  }
+
+  return launches.find((launch) => launch.id === id) ?? null;
+};
+
+// TODO: could put this to its own file
+const useGetLaunch = (
+  launches: LaunchPageProps['launches'],
+  setErrored: (boolean) => void,
+) => {
   const router = useRouter();
   const { id } = router.query;
-
-  const [errored, setErrored] = useState<boolean>(null);
-  const [launch, setLaunch] = useState<null | LaunchItem>(null);
-  const [rocket, setRocket] = useState<null | Rocket>(null);
+  const [launch, setLaunch] = useState(
+    getLaunchFromLocalLaunches(id, launches),
+  );
 
   useEffect(() => {
-    if (!id || typeof id !== 'string') {
+    if (launch || typeof id !== 'string') {
       return;
     }
 
@@ -30,7 +49,16 @@ const LaunchPage: FunctionComponent = () => {
         setLaunch(data);
       }
     })();
-  }, [id]);
+  }, [id, launch, setErrored]);
+
+  return launch;
+};
+
+const LaunchPage: FunctionComponent<LaunchPageProps> = ({ launches }) => {
+  const [errored, setErrored] = useState<boolean>(false);
+
+  const launch = useGetLaunch(launches, setErrored);
+  const [rocket, setRocket] = useState<null | Rocket>(null);
 
   useEffect(() => {
     if (!launch) {
@@ -48,16 +76,24 @@ const LaunchPage: FunctionComponent = () => {
     })();
   }, [launch]);
 
+  if (errored) {
+    return <GenericError />;
+  }
+
+  // TODO: would be better to have separate state for loading
+  if (!launch) {
+    return <div>Loading, please wait..</div>;
+  }
+
   return (
     <div>
-      {launch?.name}
+      {launch.name}
       {rocket && (
         <div>
           The rocket used in the launch
           <div>{rocket.name}</div>
         </div>
       )}
-      {errored && <GenericError />}
     </div>
   );
 };
