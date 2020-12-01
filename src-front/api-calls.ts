@@ -1,3 +1,4 @@
+import CrewMember from './types/CrewMember';
 import LaunchItem from './types/Launch';
 import Payload from './types/Payload';
 import ResponseContainer from './types/ResponseContainer';
@@ -43,4 +44,10 @@ export const fetchPayloads = async (): Promise<
   ResponseContainer<Payload[]>
 > => {
   return doFetchRequest(`/payloads`);
+};
+
+export const fetchCrewMembers = async (): Promise<
+  ResponseContainer<CrewMember[]>
+> => {
+  return doFetchRequest(`/crew`);
 };

@@ -9,7 +9,7 @@ interface LaunchProps {
 }
 
 const Launch: FunctionComponent<LaunchProps> = ({ launch }) => {
-  const { id, name, date_local: date } = launch;
+  const { id, name, date_local: date, crew } = launch;
 
   return (
     <div className={styles.container}>
@@ -17,6 +17,9 @@ const Launch: FunctionComponent<LaunchProps> = ({ launch }) => {
         <Link href={`/launches/${id}`}>{name}</Link>
       </div>
       <div>{date}</div>
+      <div>
+        {launch.crew && launch.crew.length > 0 ? 'Has crew' : 'No crew'}
+      </div>
     </div>
   );
 };

@@ -7,7 +7,8 @@ import GenericError from '../../src-front/components/error';
 import State from '../../src-front/state/State';
 import Rocket from '../../src-front/types/Rocket';
 
-interface LaunchPageProps extends Pick<State, 'launches' | 'payloads'> {}
+interface LaunchPageProps
+  extends Pick<State, 'launches' | 'payloads' | 'crewMembers'> {}
 
 const getLaunchFromLocalLaunches = (
   id,
@@ -27,7 +28,7 @@ const getLaunchFromLocalLaunches = (
 // TODO: could put this to its own file
 const useGetLaunch = (
   launches: LaunchPageProps['launches'],
-  setErrored: (boolean) => void,
+  setErrored: (errored: boolean) => void,
 ) => {
   const router = useRouter();
   const { id } = router.query;
@@ -57,6 +58,7 @@ const useGetLaunch = (
 const LaunchPage: FunctionComponent<LaunchPageProps> = ({
   launches,
   payloads,
+  crewMembers,
 }) => {
   const [errored, setErrored] = useState<boolean>(false);
 
@@ -92,6 +94,10 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
     (payload) => payload.launch === launch.id,
   );
 
+  const launchCrewMembers = crewMembers?.filter((member) =>
+    member.launches.includes(launch.id),
+  );
+
   return (
     <div>
       {launch.name}
@@ -105,10 +111,26 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
         <div>
           {"The launch's payloads:"}
           <ul>
-            {launchPayloads?.map((payload) => (
+            {launchPayloads.map((payload) => (
               <li key={payload.name}>{payload.name}</li>
             ))}
           </ul>
+        </div>
+      )}
+      {launchCrewMembers && (
+        <div>
+          {launchCrewMembers.length === 0 ? (
+            <div>No crew members</div>
+          ) : (
+            <div>
+              Crew members at the launch:
+              <ul>
+                {launchCrewMembers.map((member) => (
+                  <li key={member.name}>{member.name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
