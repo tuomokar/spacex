@@ -2,3 +2,7 @@
     display: flex;
     flex-direction: row;
 }
+
+.dataPiece {
+    padding: 8px;
+}
