@@ -18,8 +18,13 @@ const Payloads: FunctionComponent<CrewMembersProps> = ({ payloads }) => {
     <div>
       {"The launch's payloads:"}
       <ul>
-        {payloads.map((payload) => (
-          <li key={payload.name}>{payload.name}</li>
+        {payloads.map(({ type, name }) => (
+          <li key={name}>
+            <div>
+              <div>Name: {name}</div>
+              <div>Type: {type}</div>
+            </div>
+          </li>
         ))}
       </ul>
     </div>
