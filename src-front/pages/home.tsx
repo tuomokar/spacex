@@ -1,60 +1,15 @@
-import { useEffect, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import Head from 'next/head';
-import { fetchCrewMembers, fetchLaunches, fetchPayloads } from '../api-calls';
 import Launches from '../components/launches';
 import GenericError from '../components/error';
-import State from '../state/State';
-import type Dispatch from '../state/Dispatch';
-import {
-  SET_CREW_ACTION_TYPE,
-  SET_LAUNCHES_ACTION_TYPE,
-  SET_PAYLOADS_ACTION_TYPE,
-} from '../state/constants';
+import LaunchItem from '../types/Launch';
 
-interface HomePageProps extends Pick<State, 'launches'> {
-  dispatch: Dispatch;
+interface HomePageProps {
+  errored: boolean;
+  launches: LaunchItem[] | null;
 }
 
-const HomePage: FunctionComponent<HomePageProps> = ({ launches, dispatch }) => {
-  const [errored, setErrored] = useState<boolean>(false);
-
-  useEffect(() => {
-    (async () => {
-      const { data, succeeded } = await fetchLaunches();
-
-      if (!succeeded) {
-        setErrored(true);
-      } else {
-        dispatch({ type: SET_LAUNCHES_ACTION_TYPE, payload: data });
-      }
-    })();
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      const { data, succeeded } = await fetchPayloads();
-
-      if (!succeeded) {
-        setErrored(true);
-      } else {
-        dispatch({ type: SET_PAYLOADS_ACTION_TYPE, payload: data });
-      }
-    })();
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      const { data, succeeded } = await fetchCrewMembers();
-
-      if (!succeeded) {
-        setErrored(true);
-      } else {
-        dispatch({ type: SET_CREW_ACTION_TYPE, payload: data });
-      }
-    })();
-  }, [dispatch]);
-
+const HomePage: FunctionComponent<HomePageProps> = ({ launches, errored }) => {
   return (
     <div>
       <Head>

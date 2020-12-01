@@ -2,13 +2,18 @@ import { useRouter } from 'next/router';
 import type { FunctionComponent } from 'react';
 import { useEffect, useState } from 'react';
 
-import { fetchLaunch, fetchRocket } from '../../src-front/api-calls';
-import GenericError from '../../src-front/components/error';
-import State from '../../src-front/state/State';
-import Rocket from '../../src-front/types/Rocket';
+import { fetchLaunch, fetchRocket } from '../api-calls';
+import GenericError from '../components/error';
+import Rocket from '../types/Rocket';
+import CrewMember from '../types/CrewMember';
+import LaunchItem from '../types/Launch';
+import Payload from '../types/Payload';
 
-interface LaunchPageProps
-  extends Pick<State, 'launches' | 'payloads' | 'crewMembers'> {}
+interface LaunchPageProps {
+  launches: LaunchItem[] | null;
+  payloads: Payload[] | null;
+  crewMembers: CrewMember[] | null;
+}
 
 const getLaunchFromLocalLaunches = (
   id,
@@ -61,9 +66,8 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
   crewMembers,
 }) => {
   const [errored, setErrored] = useState<boolean>(false);
-
-  const launch = useGetLaunch(launches, setErrored);
   const [rocket, setRocket] = useState<null | Rocket>(null);
+  const launch = useGetLaunch(launches, setErrored);
 
   useEffect(() => {
     if (!launch) {
