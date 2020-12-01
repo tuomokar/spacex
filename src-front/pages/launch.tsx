@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 
 import { fetchLaunch, fetchRocket } from '../api-calls';
 import GenericError from '../components/error';
-import Rocket from '../types/Rocket';
+import RocketType from '../types/Rocket';
 import CrewMember from '../types/CrewMember';
 import LaunchItem from '../types/Launch';
 import Payload from '../types/Payload';
+import CrewMembers from '../components/crew-members';
+import Payloads from '../components/payloads';
+import Rocket from '../components/rocket/rocket';
 
 interface LaunchPageProps {
   launches: LaunchItem[] | null;
@@ -66,7 +69,7 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
   crewMembers,
 }) => {
   const [errored, setErrored] = useState<boolean>(false);
-  const [rocket, setRocket] = useState<null | Rocket>(null);
+  const [rocket, setRocket] = useState<null | RocketType>(null);
   const launch = useGetLaunch(launches, setErrored);
 
   useEffect(() => {
@@ -94,49 +97,19 @@ const LaunchPage: FunctionComponent<LaunchPageProps> = ({
     return <div>Loading, please wait..</div>;
   }
 
-  const launchPayloads = payloads?.filter(
-    (payload) => payload.launch === launch.id,
-  );
+  const launchPayloads =
+    payloads?.filter((payload) => payload.launch === launch.id) ?? null;
 
-  const launchCrewMembers = crewMembers?.filter((member) =>
-    member.launches.includes(launch.id),
-  );
+  const launchCrewMembers =
+    crewMembers?.filter((member) => member.launches.includes(launch.id)) ??
+    null;
 
   return (
     <div>
       {launch.name}
-      {rocket && (
-        <div>
-          The rocket used in the launch:
-          <div>{rocket.name}</div>
-        </div>
-      )}
-      {launchPayloads && (
-        <div>
-          {"The launch's payloads:"}
-          <ul>
-            {launchPayloads.map((payload) => (
-              <li key={payload.name}>{payload.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {launchCrewMembers && (
-        <div>
-          {launchCrewMembers.length === 0 ? (
-            <div>No crew members</div>
-          ) : (
-            <div>
-              Crew members at the launch:
-              <ul>
-                {launchCrewMembers.map((member) => (
-                  <li key={member.name}>{member.name}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
+      <Rocket rocket={rocket} />
+      <Payloads payloads={launchPayloads} />
+      <CrewMembers crewMembers={launchCrewMembers} />
     </div>
   );
 };
