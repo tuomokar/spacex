@@ -3,7 +3,7 @@ export default interface LaunchItem {
   capsules: unknown[];
   cores: unknown[];
   crew: unknown[];
-  date_local: [];
+  date_local: string;
   date_precision: string;
   date_unix: number;
   date_utc: string;
